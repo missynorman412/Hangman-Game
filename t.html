@@ -1,0 +1,59 @@
+<body>
+    <div id="game">
+        <p>Press any letter to start playing!</p>
+    </div>
+
+    <script>
+        //functions
+        String.prototype.replaceAt = function (index, replacement) {
+            return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+        }
+
+        //vars
+        var word = ["Washington", "Lincoln", "Kennedy", "Johnson"];
+        var wins = 0;
+        var losses = 0;
+        var guesses = 15;
+        var outputString = "";
+        
+
+          document.onkeyup = function (event) {
+            // Determines which key was pressed.
+            var userGuess = event.key;
+            if (guesses === 15) {
+                var wordChoice = word[Math.floor(Math.random() * word.length)];
+                console.log(wordChoice + "***");
+                //initialize an array with the spaces for output
+                for (i = 0; i < wordChoice.length; i++) {
+                    outputString += "_ ";
+                }
+                var lettersLeft = (wordChoice.length);
+                
+            }
+            guesses = guesses - 1;
+            console.log(wordChoice + "*");
+            //check to see if letter user pressed is in the computer selected word
+            var charIsIn = wordChoice.search(userGuess);
+            //multiply charIsIn by 2 to take into account the spaces in the output string
+            charIsIn = charIsIn * 2;
+            if (charIsIn > -1) {
+                //letter is found
+                lettersLeft = lettersLeft - 1;
+                outputString = outputString.replaceAt(charIsIn, userGuess);
+                console.log(outputString);
+                document.write(outputString);
+
+            }
+            if (lettersLeft === 0) {
+                if (guesses === 0) {
+                    losses += 1;
+                            }
+            }
+            else {
+                wins += 1;
+            }
+        };
+    </script>
+</body>
+
+</html>
